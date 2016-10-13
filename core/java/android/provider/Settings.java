@@ -4085,9 +4085,17 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_CLOCK_DATE_COLOR = "lockscreen_clock_date_color";
 
+	/**
+          * Whether blur effect should be enabled.
+          * @hide
+          */
+        public static final String LOCK_SCREEN_BLUR_ENABLED = "uiBlurEnabled";
+
         /**
-         * Change clock fonts size for the system lockscreen clock widget
-         * @hide
+         * IMPORTANT: If you add a new public settings you also have to add it to
+         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
+         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
+         * the setting value. See an example above.
          */
 
 	public static final String LOCKCLOCK_FONT_SIZE  = "lockclock_font_size";

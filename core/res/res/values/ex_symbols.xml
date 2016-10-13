@@ -265,4 +265,7 @@
 
   <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 
+  <!-- Blur effects -->
+  <java-symbol type="bool" name="config_uiBlurEnabled" />
+
 </resources>
