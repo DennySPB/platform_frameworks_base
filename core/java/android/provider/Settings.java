@@ -7085,6 +7085,12 @@ public final class Settings {
          */
         public static final String LOCK_HIDE_STATUS_BAR = "lockscreen_hide_status_bar";
 
+
+        /**
+         * @hide
+         */
+        public static final String LOCK_SCREEN_BLUR_ENABLED = "lock_screen_blur_enabled";
+
         /**
          * This preference allows the device to be locked given time after screen goes off,
          * subject to current DeviceAdmin policy limits.

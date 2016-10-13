@@ -146,4 +146,8 @@
     <!-- Defines the length of FP unlock boost -->
     <integer name="fpunlockboost_duration">700</integer>
 
+    <!-- Support in Surfaceflinger for blur layers.
+         NOTE: This requires additional hardware-specific code. -->
+    <bool name="config_uiBlurEnabled">false</bool>
+
 </resources>
