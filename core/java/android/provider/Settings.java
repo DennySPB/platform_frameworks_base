@@ -4291,6 +4291,25 @@ public final class Settings {
          */
         public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
 
+        /**
+         * Whether the phone vibrates on connect
+         * @hide
+         */
+        public static final String VIBRATE_ON_CONNECT = "vibrate_on_connect";
+
+        /**
+         * Whether the phone vibrates on call waiting
+         * @hide
+         */
+        public static final String VIBRATE_ON_CALLWAITING = "vibrate_on_callwaiting";
+
+        /**
+         * Whether the phone vibrates on disconnect
+         * @hide
+         */
+
+        public static final String VIBRATE_ON_DISCONNECT = "vibrate_on_disconnect";
+
 
         /**
          * Change quick settings tiles animation style
@@ -8384,6 +8403,8 @@ public final class Settings {
          *
          * @hide
          */
+
+
         public static final String[] SETTINGS_TO_BACKUP = {
             BUGREPORT_IN_POWER_MENU,                            // moved to global
             ALLOW_MOCK_LOCATION,
