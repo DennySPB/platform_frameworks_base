@@ -4312,6 +4312,20 @@ public final class Settings {
 
 
         /**
+         * Vibration time Whether the phone vibrates on connect
+         * @hide
+         */
+
+        public static final String VIBRATE_ON_CONNECT_TIME = "vibrate_on_connect_time";
+
+        /**
+         * Vibration time Whether the phone vibrates on disconnect
+         * @hide
+         */
+
+        public static final String VIBRATE_ON_DISCONNECT_TIME = "vibrate_on_disconnect_time";
+
+        /**
          * Change quick settings tiles animation style
          *
          * @hide
