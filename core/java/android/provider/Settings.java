@@ -4325,6 +4325,13 @@ public final class Settings {
 
         public static final String VIBRATE_ON_DISCONNECT_TIME = "vibrate_on_disconnect_time";
 
+         /**
+         * Color temp string for nightdisplay options
+         * @hide
+         */
+
+        public static final String NIGHTMODE_COLOR_TEMP = "nightmode_color_temp";
+
         /**
          * Change quick settings tiles animation style
          *

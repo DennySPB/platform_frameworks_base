@@ -68,12 +68,102 @@ public final class NightDisplayService extends SystemService
     private static final boolean DEBUG = false;
 
     /**
+     * Night display ~= 1000 K.
+     */
+    private static final float[] MATRIX_NIGHT_1000 = new float[] {
+        1,      0,      0, 0,
+        0, 0.220f,      0, 0,
+        0,      0,      0, 0,
+        0,      0,      0, 1
+    };
+
+    /**
+     * Night display ~= 1500 K.
+     */
+    private static final float[] MATRIX_NIGHT_1500 = new float[] {
+        1,      0,      0, 0,
+        0, 0.537f,      0, 0,
+        0,      0,      0, 0,
+        0,      0,      0, 1
+    };
+
+    /**
+     * Night display ~= 2000 K.
+     */
+    private static final float[] MATRIX_NIGHT_2000 = new float[] {
+        1,      0,      0, 0,
+        0, 0.427f,      0, 0,
+        0,      0, 0.071f, 0,
+        0,      0,      0, 1
+    };
+
+    /**
+     * Night display ~= 2500 K.
+     */
+    private static final float[] MATRIX_NIGHT_2500 = new float[] {
+        1,      0,      0, 0,
+        0, 0.631f,      0, 0,
+        0,      0, 0.282f, 0,
+        0,      0,      0, 1
+    };
+
+    /**
+     * Night display ~= 3000 K.
+     */
+    private static final float[] MATRIX_NIGHT_3000 = new float[] {
+        1,      0,      0, 0,
+        0, 0.706f,      0, 0,
+        0,      0,  0.42f, 0,
+        0,      0,      0, 1
+    };
+
+    /**
      * Night display ~= 3400 K.
      */
-    private static final float[] MATRIX_NIGHT = new float[] {
+    private static final float[] MATRIX_NIGHT_3400 = new float[] {
         1,      0,      0, 0,
         0, 0.754f,      0, 0,
         0,      0, 0.516f, 0,
+        0,      0,      0, 1
+    };
+
+    /**
+     * Night display ~= 3500 K.
+     */
+    private static final float[] MATRIX_NIGHT_3500 = new float[] {
+        1,      0,      0, 0,
+        0, 0.769f,      0, 0,
+        0,      0, 0.537f, 0,
+        0,      0,      0, 1
+    };
+
+    /**
+     * Night display ~= 4000 K.
+     */
+    private static final float[] MATRIX_NIGHT_4000 = new float[] {
+        1,      0,      0, 0,
+        0, 0.820f,      0, 0,
+        0,      0, 0.639f, 0,
+        0,      0,      0, 1
+    };
+
+    /**
+     * Night display ~= 4500 K.
+     */
+    private static final float[] MATRIX_NIGHT_4500 = new float[] {
+        1,      0,      0, 0,
+        0, 0.859f,      0, 0,
+        0,      0, 0.729f, 0,
+        0,      0,      0, 1
+    };
+
+    /**
+     * Night display ~= 5000 K.
+     */
+    private static final float[] MATRIX_NIGHT_5000 = new float[] {
+        1,      0,      0, 0,
+        0, 0.894f,      0, 0,
+        0,      0, 0.807f, 0,
         0,      0,      0, 1
     };
 
@@ -105,14 +195,34 @@ public final class NightDisplayService extends SystemService
                         mColorMatrixAnimator.cancel();
                     }
 
+		    int nightColTemp = Settings.System.getIntForUser(getContext().getContentResolver(),
+	    	        Settings.System.NIGHTMODE_COLOR_TEMP, 0, UserHandle.USER_CURRENT);
                     final DisplayTransformManager dtm =
                             getLocalService(DisplayTransformManager.class);
                     if (enabled) {
                         dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_IDENTITY);
-                    } else if (mController.isActivated()) {
-                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT);
+                    } else if (mController.isActivated() && nightColTemp == 0) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_1000);
+                    } else if (mController.isActivated() && nightColTemp == 1) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_1500);
+                    } else if (mController.isActivated() && nightColTemp == 2) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_2000);
+                    } else if (mController.isActivated() && nightColTemp == 3) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_2500);
+                    } else if (mController.isActivated() && nightColTemp == 4) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_3000);
+                    } else if (mController.isActivated() && nightColTemp == 5) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_3400);
+                    } else if (mController.isActivated() && nightColTemp == 6) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_3500);
+                    } else if (mController.isActivated() && nightColTemp == 7) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_4000);
+                    } else if (mController.isActivated() && nightColTemp == 8) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_4500);
+                    } else if (mController.isActivated() && nightColTemp == 9) {
+                        dtm.setColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY, MATRIX_NIGHT_5000);
                     }
-                }
+	         }
             });
         }
     };
@@ -293,11 +403,52 @@ public final class NightDisplayService extends SystemService
             if (mIgnoreAllColorMatrixChanges.get()) {
                 return;
             }
-
+	    float[] USERTEMP_MATRIX = new float[] {
+					            1,      0,      0, 0,
+					            0, 0.754f,      0, 0,
+					            0,      0, 0.516f, 0,
+					            0,      0,      0, 1
+						    };
+	    int nightTemp = Settings.System.getIntForUser(getContext().getContentResolver(),
+		    Settings.System.NIGHTMODE_COLOR_TEMP, 0, UserHandle.USER_CURRENT);
+    	switch (nightTemp) {
+            case 0:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_1000;
+                break;
+            case 1:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_1500;
+                break;
+            case 2:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_2000;
+                break;
+            case 3:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_2500;
+                break;
+            case 4:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_3000;
+                break;
+            case 5:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_3400;
+                break;
+            case 6:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_3500;
+                break;
+            case 7:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_4000;
+                break;
+            case 8:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_4500;
+                break;
+            case 9:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_5000;
+                break;
+            default:
+	     USERTEMP_MATRIX = MATRIX_NIGHT_3400;
+                break;
+        }
             final DisplayTransformManager dtm = getLocalService(DisplayTransformManager.class);
             final float[] from = dtm.getColorMatrix(LEVEL_COLOR_MATRIX_NIGHT_DISPLAY);
-            final float[] to = mIsActivated ? MATRIX_NIGHT : null;
-
+    	    final float[] to = mIsActivated ? USERTEMP_MATRIX : null;
             mColorMatrixAnimator = ValueAnimator.ofObject(COLOR_MATRIX_EVALUATOR,
                     from == null ? MATRIX_IDENTITY : from, to == null ? MATRIX_IDENTITY : to);
             mColorMatrixAnimator.setDuration(getContext().getResources()
