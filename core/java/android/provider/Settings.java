@@ -4326,6 +4326,13 @@ public final class Settings {
         public static final String VIBRATE_ON_DISCONNECT_TIME = "vibrate_on_disconnect_time";
 
          /**
+         * Home button behavior when phone is ringing
+         * @hide
+         */
+
+        public static final String RING_HOME_BUTTON_BEHAVIOR = "ring_home_button_behavior";
+
+         /**
          * Color temp string for nightdisplay options
          * @hide
          */
