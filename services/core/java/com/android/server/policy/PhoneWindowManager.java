@@ -711,6 +711,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Behavior of Home button while in-call and screen on
     boolean mIncallHomeBehavior;
 
+    // Behavior of Home button during incoming call
+    boolean mRingHomeBehavior;
+
     Display mDisplay;
 
     private int mDisplayRotation;
@@ -2446,6 +2449,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             mIncallHomeBehavior = (Settings.System.getIntForUser(resolver,
                     Settings.System.ALLOW_INCALL_HOME, 1, UserHandle.USER_CURRENT) == 1);
+	    mRingHomeBehavior = (Settings.System.getIntForUser(resolver,
+        	    Settings.System.RING_HOME_BUTTON_BEHAVIOR, 1, UserHandle.USER_CURRENT) == 1);
 
         }
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {
@@ -3675,6 +3680,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                       Log.i(TAG, "Ignoring HOME; there's a ringing incoming call.");
                       return -1;
                   }
+		else
+		 if (mRingHomeBehavior) {
+		        telecomManager.acceptRingingCall();
+                        return -1;
+                }
 
                 // Delay handling home if a double-tap is possible.
                 if (mDoubleTapOnHomeBehavior != DOUBLE_TAP_HOME_NOTHING) {
