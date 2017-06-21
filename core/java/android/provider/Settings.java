@@ -4319,6 +4319,83 @@ public final class Settings {
         public static final String VIBRATE_ON_CONNECT_TIME = "vibrate_on_connect_time";
 
         /**
+         * Dialer lookup settings
+         * @hide
+         */
+
+	public static final String ENABLE_FORWARD_LOOKUP = "enable_forward_lookup";
+
+        /**
+         * Dialer lookup settings
+         * @hide
+         */
+
+	public static final String FORWARD_LOOKUP_PROVIDER = "forward_lookup_provider";
+
+        /**
+         * Dialer lookup settings
+         * @hide
+         */
+
+	public static final String ENABLE_PEOPLE_LOOKUP = "enable_people_lookup";
+
+        /**
+         * Dialer lookup settings
+         * @hide
+         */
+
+	public static final String PEOPLE_LOOKUP_PROVIDER = "people_lookup_provider";
+
+        /**
+         * Dialer lookup settings
+         * @hide
+         */
+
+	public static final String ENABLE_REVERSE_LOOKUP = "enable_reverse_lookup";
+
+        /**
+         * Dialer lookup settings
+         * @hide
+         */
+
+	public static final String REVERSE_LOOKUP_PROVIDER = "reverse_lookup_provider";
+
+        /**
+         * Dialer proximity speaker settings
+         * @hide
+         */
+
+	public static final String PROXIMITY_AUTO_SPEAKER = "proximity_auto_speaker";
+
+        /**
+         * Dialer proximity speaker settings
+         * @hide
+         */
+
+	public static final String PROXIMITY_AUTO_SPEAKER_DELAY = "proximity_auto_speaker_delay";
+
+        /**
+         * Dialer proximity speaker settings
+         * @hide
+         */
+
+	public static final String PROXIMITY_AUTO_SPEAKER_INCALL_ONLY = "proximity_auto_speaker_incall_only";
+
+        /**
+         * Dialer opencnam settings
+         * @hide
+         */
+
+	public static final String DIALER_OPENCNAM_ACCOUNT_SID = "dialer_opencnam_account_sid";
+
+        /**
+         * Dialer opencnam settings
+         * @hide
+         */
+
+	public static final String DIALER_OPENCNAM_AUTH_TOKEN = "dialer_opencnam_auth_token";
+
+        /**
          * Vibration time Whether the phone vibrates on disconnect
          * @hide
          */
