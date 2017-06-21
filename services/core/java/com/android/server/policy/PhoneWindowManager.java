@@ -3681,8 +3681,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                       return -1;
                   }
 		else
-		 if (mRingHomeBehavior) {
+		 if (telecomManager != null && telecomManager.isRinging()
+			&& mRingHomeBehavior) {
 		        telecomManager.acceptRingingCall();
+                      Log.i(TAG, "Answering incomming call via HOME.");
                         return -1;
                 }
 

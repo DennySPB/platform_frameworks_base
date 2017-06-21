@@ -4389,6 +4389,13 @@ public final class Settings {
 	public static final String DIALER_OPENCNAM_ACCOUNT_SID = "dialer_opencnam_account_sid";
 
         /**
+         * Dialer smartmute settings
+         * @hide
+         */
+
+	public static final String BUTTON_SMART_MUTE_KEY = "button_smart_mute";
+
+        /**
          * Dialer opencnam settings
          * @hide
          */
