@@ -146,7 +146,6 @@
   <string name="accessibility_quick_settings_nfc_changed_off">NFC выключен</string>
   <string name="accessibility_quick_settings_nfc_changed_on">NFC включен</string>
   <!-- SystemUI Tuner Parts -->
-  <string name="systemui_tuner_statusbar_title">Элементы строки состояния</string>
   <string name="accessibility_quick_settings_location_battery_saving">Определение местоположения: по координатам сети.</string>
   <string name="accessibility_quick_settings_location_gps_only">Определение местоположения: по спутникам GPS.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Определение местоположения: по всем источникам.</string>
@@ -269,5 +268,15 @@
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_preventpower">Позволяет приложениям перехватывать кнопку питания.</string>
 
->>>>>>> RU translation update
+    <!-- SystemUI Tuner Parts -->
+    <string name="systemui_tuner_statusbar_title">Элементы статусбара</string>
+
+    <string name="data_wifi_activity_arrows_title">Сетевая активность</string>
+
+    <string name="omnijaws_label_default">Погода</string>
+
+    <string name="quick_settings_gesture_anywhere_label">Жест везде</string>
+    <string name="quick_settings_gesture_anywhere_on">Жест везде вкл.</string>
+    <string name="quick_settings_gesture_anywhere_off">Жест везде выкл.</string>
+
 </resources>
