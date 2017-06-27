@@ -47,7 +47,7 @@ public class GestureAnyWhereTile extends QSTile<QSTile.BooleanState> {
     private GestureObserver mObserver;
 
  private static final Intent GESTURE_SETTINGS = new Intent().setComponent(new ComponentName(
-            "com.android.settings", "com.android.settings.Settings$GestrueAnywhereActivity"));
+            "com.android.settings", "com.android.settings.Settings$GestureSettingsActivity"));
 
     public GestureAnyWhereTile (Host host) {
         super(host);
