@@ -4058,6 +4058,34 @@ public final class Settings {
         public static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";
 
         /**
+         * Change the color of the lockscreen clock
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_CLOCK_COLOR = "lockscreen_clock_color";
+
+        /**
+         * Change the color of the lockscreen date underneath the clock
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_CLOCK_DATE_COLOR = "lockscreen_clock_date_color";
+
+        /**
+         * Change clock fonts size for the system lockscreen clock widget
+         * @hide
+         */
+
+	public static final String LOCKCLOCK_FONT_SIZE  = "lockclock_font_size";
+
+        /**
+         * Change date fonts for the system lockscreen clock widget
+         * @hide
+         */
+
+	public static final String LOCKDATE_FONT_SIZE  = "lockdate_font_size";
+
+        /**
          * Whether to prevent loud volume levels when headset is first plugged in.
          * @hide
          */
@@ -5172,6 +5200,12 @@ public final class Settings {
          * @hide
          */
         public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
+
+        /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
 
         /**
          * Navbar Button Color Switch
