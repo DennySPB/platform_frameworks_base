@@ -154,6 +154,9 @@
   <!-- Hardware key binding -->
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
 
+  <!-- Hardware key binding -->
+  <java-symbol type="bool" name="config_DeviceHaveMechHome" />
+
   <!-- Toast Animation -->
   <java-symbol type="style" name="Animation.Toast.Fade" />
   <java-symbol type="style" name="Animation.Toast.SlideRight" />

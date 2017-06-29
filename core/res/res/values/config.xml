@@ -835,6 +835,9 @@
     -->
     <integer name="config_backPanicBehavior">0</integer>
 
+    <!-- Device have mechanical home button. If it is, we don't need to vibrate on it  -->
+    <bool name="config_DeviceHaveMechHome">false</bool>
+
     <!-- Control the behavior when the user short presses the power button.
             0 - Nothing
             1 - Go to sleep (doze)
@@ -2786,6 +2789,7 @@
 
     <!-- Flag indicating whether round icons should be parsed from the application manifest. -->
     <bool name="config_useRoundIcon">false</bool>
+
 
     <!-- Flag indicating whether the assist disclosure can be disabled using
          ASSIST_DISCLOSURE_ENABLED. -->

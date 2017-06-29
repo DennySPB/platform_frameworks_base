@@ -4326,6 +4326,13 @@ public final class Settings {
          */
         public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
 
+
+        /**
+         * Whether the haptic feedback on action instead of touch
+         * @hide
+         */
+        public static final String HAPTIC_ON_ACTION_KEY = "haptic_on_action_key";
+
         /**
          * Whether the phone vibrates on connect
          * @hide

@@ -187,7 +187,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final String TAG = "WindowManager";
     static final boolean DEBUG = false;
     static final boolean localLOGV = false;
-    static final boolean DEBUG_INPUT = false;
+    static final boolean DEBUG_INPUT = true;
     static final boolean DEBUG_KEYGUARD = false;
     static final boolean DEBUG_LAYOUT = false;
     static final boolean DEBUG_STARTING_WINDOW = false;
@@ -714,6 +714,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Behavior of Home button during incoming call
     boolean mRingHomeBehavior;
 
+    // Haptic on action
+    boolean mHapticOnAction;
+
     Display mDisplay;
 
     private int mDisplayRotation;
@@ -1032,6 +1035,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ALLOW_INCALL_HOME), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HAPTIC_ON_ACTION_KEY), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HOME_WAKE_SCREEN), false, this,
@@ -2449,6 +2455,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             mIncallHomeBehavior = (Settings.System.getIntForUser(resolver,
                     Settings.System.ALLOW_INCALL_HOME, 1, UserHandle.USER_CURRENT) == 1);
+            mHapticOnAction = (Settings.System.getIntForUser(resolver,
+                    Settings.System.HAPTIC_ON_ACTION_KEY, 0, UserHandle.USER_CURRENT) == 1);
 	    mRingHomeBehavior = (Settings.System.getIntForUser(resolver,
         	    Settings.System.RING_HOME_BUTTON_BEHAVIOR, 1, UserHandle.USER_CURRENT) == 1);
 
@@ -6399,6 +6407,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         boolean useHapticFeedback = down
+		&& (!mHapticOnAction)
                 && (policyFlags & WindowManagerPolicy.FLAG_VIRTUAL) != 0
                 && event.getRepeatCount() == 0
                 && !isHwKeysDisabled();
