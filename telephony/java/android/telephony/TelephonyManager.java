@@ -3260,6 +3260,16 @@ public class TelephonyManager {
     }
 
     /**
+     * @hide
+     */
+    public void toggle3G(boolean threeGees) {
+        try {
+            getITelephony().toggleThreeG(threeGees);
+        } catch (RemoteException ex) {
+        }
+    }
+
+    /**
      * Returns the MMS user agent.
      */
     public String getMmsUserAgent() {

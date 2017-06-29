@@ -52,7 +52,7 @@ public class TwoGToggle extends ScreenStateToggle {
     }
 
     protected boolean doScreenOffAction(){
-        if (isNotTwoGMode()){
+        if ((isNotTwoGMode()) || (isNotThreeGMode())){
             mDoAction = true;
         } else {
             mDoAction = false;
@@ -84,14 +84,23 @@ public class TwoGToggle extends ScreenStateToggle {
         return getCurrentPreferredNetworkMode() != Phone.NT_MODE_GSM_ONLY;
     }
 
+    private boolean isNotThreeGMode(){
+        return getCurrentPreferredNetworkMode() != Phone.NT_MODE_WCDMA_PREF;
+    }
+
     protected Runnable getScreenOffAction(){
         return new Runnable() {
             @Override
             public void run() {
                 TelephonyManager tm = (TelephonyManager) mContext
                         .getSystemService(Context.TELEPHONY_SERVICE);
-                Log.d(TAG, "2G = true");
+                Log.d(TAG, "2G/3G = true");
+		if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREEN_STATE_TWOG, 0) == 1) {
                 tm.toggle2G(true);
+		} else if
+		(Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREEN_STATE_TWOG, 0) == 2) {
+		tm.toggle3G(true);
+		}
             }
         };
     }
@@ -101,8 +110,15 @@ public class TwoGToggle extends ScreenStateToggle {
             public void run() {
                 TelephonyManager tm = (TelephonyManager) mContext
                         .getSystemService(Context.TELEPHONY_SERVICE);
-                Log.d(TAG, "2G = false");
+                Log.d(TAG, "2G/3G = false");
+		if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREEN_STATE_TWOG, 0) == 1) {
                 tm.toggle2G(false);
+		} else if
+		(Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREEN_STATE_TWOG, 0) == 2) {
+		tm.toggle3G(false);
+		}
+
+//                tm.toggle2G(false);
             }
         };
     }
