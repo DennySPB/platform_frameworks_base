@@ -8051,6 +8051,13 @@ public final class Settings {
         public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
 
         /**
+         * Disable hw buttons - actions, brightness, haptic feedback, overflow menu
+         * @hide
+         */
+        public static final String HARDWARE_KEYS_BACK_APPS_KEY = "hardware_keys_back_apps_key";
+
+
+        /**
          * The current night mode that has been selected by the user.  Owned
          * and controlled by UiModeManagerService.  Constants are as per
          * UiModeManager.
@@ -8368,6 +8375,12 @@ public final class Settings {
           * @hide
         */
          public static final String FORCE_CHARGE_BATTERY_TEXT = "force_charge_battery_text";
+
+	/** Whether to pulse the battery icon when charging
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_PULSE_CHARGING_BATTERY = "status_bar_pulse_charging_battery";
 
         /**
          * Control whether Night display will automatically activate/deactivate.
