@@ -148,9 +148,9 @@ public class HardkeyActionHandler {
     private boolean filterDisabledKey(int keyCode) {
         return mHwKeysDisabled && (keyCode == KeyEvent.KEYCODE_HOME
                 || keyCode == KeyEvent.KEYCODE_MENU
-                || (keyCode == KeyEvent.KEYCODE_APP_SWITCH && mHwKeysBackAppsDisabled)
+                || keyCode == KeyEvent.KEYCODE_APP_SWITCH
                 || keyCode == KeyEvent.KEYCODE_ASSIST
-                || (keyCode == KeyEvent.KEYCODE_BACK && mHwKeysBackAppsDisabled));
+                || keyCode == KeyEvent.KEYCODE_BACK);
     }
 
     public boolean handleKeyEvent(WindowState win, int keyCode, int repeatCount, boolean down,
@@ -347,7 +347,9 @@ public class HardkeyActionHandler {
             }
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_APP_SWITCH) {
-            if (!down && mRecentButton.isPressed()) {
+	    if (mHwKeysBackAppsDisabled) {
+	    return true;
+	    } else if (!down && mRecentButton.isPressed()) {
                 mRecentButton.setPressed(false);
 
                 if (mRecentButton.wasConsumed()) {
@@ -475,7 +477,10 @@ public class HardkeyActionHandler {
             }
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (!down && mBackButton.isPressed()) {
+	    if (mHwKeysBackAppsDisabled) {
+	    return true;
+	    }
+            else if (!down && mBackButton.isPressed()) {
                 mBackButton.setPressed(false);
 
                 if (mBackButton.wasConsumed()) {
@@ -716,7 +721,7 @@ public class HardkeyActionHandler {
 
             mHwKeysBackAppsDisabled = Settings.Secure.getIntForUser(cr,
                     Settings.Secure.HARDWARE_KEYS_BACK_APPS_KEY, 0,
-                    UserHandle.USER_CURRENT) == 1;
+                    UserHandle.USER_CURRENT) != 0;
 
 
             final boolean hasMenu = (mDeviceHardwareKeys & KEY_MASK_MENU) != 0;

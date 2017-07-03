@@ -529,6 +529,7 @@ public final class PowerManagerService extends SystemService
 
     // overrule and disable brightness for buttons
     private boolean mHardwareKeysDisable = false;
+    private boolean mHardwareKeysAppsBackDisable = false;
 
     // button on touch
     private boolean mButtonBacklightOnTouchOnly;
@@ -762,6 +763,9 @@ public final class PowerManagerService extends SystemService
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.HARDWARE_KEYS_DISABLE),
                     false, mSettingsObserver, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.HARDWARE_KEYS_BACK_APPS_KEY),
+                    false, mSettingsObserver, UserHandle.USER_ALL);
 
             // Go.
             readConfigurationLocked();
@@ -947,6 +951,9 @@ public final class PowerManagerService extends SystemService
         mButtonBacklightOnTouchOnly = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.BUTTON_BACKLIGHT_ON_TOUCH_ONLY,
                 0, UserHandle.USER_CURRENT) != 0;
+	mHardwareKeysAppsBackDisable = Settings.Secure.getIntForUser(resolver,
+                Settings.Secure.HARDWARE_KEYS_BACK_APPS_KEY, 0,
+                UserHandle.USER_CURRENT) != 0;
 
         mDirty |= DIRTY_SETTINGS;
     }
@@ -1910,7 +1917,7 @@ public final class PowerManagerService extends SystemService
                         mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
                         if (mWakefulness == WAKEFULNESS_AWAKE) {
                             int buttonBrightness, keyboardBrightness;
-                            if (mHardwareKeysDisable) {
+                            if (mHardwareKeysDisable || mHardwareKeysAppsBackDisable) {
                                 buttonBrightness = 0;
                                 keyboardBrightness = 0;
                             } else {
