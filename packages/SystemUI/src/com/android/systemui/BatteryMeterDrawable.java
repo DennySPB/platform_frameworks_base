@@ -399,7 +399,7 @@ public class BatteryMeterDrawable extends Drawable implements
     }
 
     public void pulseBatteryIcon(int level, boolean pluggedIn, boolean charging) {
-        if (charging) {
+//        if (charging) {
             if (mAnimator != null) mAnimator.cancel();
 
             final int defaultAlpha = mLevelDrawable.getAlpha();
@@ -426,7 +426,7 @@ public class BatteryMeterDrawable extends Drawable implements
             });
             mAnimator.setDuration(2000);
             mAnimator.start();
-        }
+//        }
     }
 
     public void setDarkIntensity(float darkIntensity) {
