@@ -115,6 +115,7 @@ public class HardkeyActionHandler {
 //    private PowerManager mPm;
     private Context mContext;
     private boolean mHwKeysDisabled = false;
+    private boolean mHwKeysBackAppsDisabled = false;
 
     public HardkeyActionHandler(Context context, Handler handler) {
         mContext = context;
@@ -147,9 +148,9 @@ public class HardkeyActionHandler {
     private boolean filterDisabledKey(int keyCode) {
         return mHwKeysDisabled && (keyCode == KeyEvent.KEYCODE_HOME
                 || keyCode == KeyEvent.KEYCODE_MENU
-                || keyCode == KeyEvent.KEYCODE_APP_SWITCH
+                || (keyCode == KeyEvent.KEYCODE_APP_SWITCH && mHwKeysBackAppsDisabled)
                 || keyCode == KeyEvent.KEYCODE_ASSIST
-                || keyCode == KeyEvent.KEYCODE_BACK);
+                || (keyCode == KeyEvent.KEYCODE_BACK && mHwKeysBackAppsDisabled));
     }
 
     public boolean handleKeyEvent(WindowState win, int keyCode, int repeatCount, boolean down,
@@ -691,6 +692,9 @@ public class HardkeyActionHandler {
                     Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(
+                    Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_BACK_APPS_KEY), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.HAPTIC_ON_ACTION_KEY), false, this,
                     UserHandle.USER_ALL);
 
@@ -709,6 +713,11 @@ public class HardkeyActionHandler {
             mHwKeysDisabled = Settings.Secure.getIntForUser(cr,
                     Settings.Secure.HARDWARE_KEYS_DISABLE, 0,
                     UserHandle.USER_CURRENT) != 0;
+
+            mHwKeysBackAppsDisabled = Settings.Secure.getIntForUser(cr,
+                    Settings.Secure.HARDWARE_KEYS_BACK_APPS_KEY, 0,
+                    UserHandle.USER_CURRENT) == 1;
+
 
             final boolean hasMenu = (mDeviceHardwareKeys & KEY_MASK_MENU) != 0;
             final boolean hasHome = (mDeviceHardwareKeys & KEY_MASK_HOME) != 0;
@@ -762,6 +771,7 @@ public class HardkeyActionHandler {
                     Settings.System.HAPTIC_ON_ACTION_KEY, 0, UserHandle.USER_CURRENT) == 1);
     	    DeviceHaveMechHome = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_DeviceHaveMechHome);
+
 
         }
     }
