@@ -989,7 +989,7 @@ public final class BatteryService extends SystemService {
             } else if (level < mLowBatteryWarningLevel) {
                 if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
                     // Battery is charging and low
-                if (!mLedChargePulseEnabled) mBatteryLight.setColor(mBatteryLowARGB);
+                    mBatteryLight.setColor(mBatteryLowARGB);
 		if (mLedChargePulseEnabled)
 		    {
 		    mBatteryLight.setFlashing(mBatteryLowARGB, Light.LIGHT_FLASH_TIMED,
@@ -1008,12 +1008,10 @@ public final class BatteryService extends SystemService {
                 if (status == BatteryManager.BATTERY_STATUS_FULL || level >= 90) {
                     if (level == 100) {
                         // Battery is really full
-		    if (mLedChargePulseEnabled) {
-		    mBatteryLight.stopFlashing();
-		    mBatteryLight.setColor(mBatteryReallyFullARGB);
+                        mBatteryLight.setColor(mBatteryReallyFullARGB);
                     } else {
                         // Battery is full or charging and nearly full
-                    if (!mLedChargePulseEnabled) mBatteryLight.setColor(mBatteryFullARGB);
+                        mBatteryLight.setColor(mBatteryFullARGB);
 		    if (mLedChargePulseEnabled)
 		       {
 		        mBatteryLight.setFlashing(mBatteryFullARGB, Light.LIGHT_FLASH_TIMED,
@@ -1022,7 +1020,7 @@ public final class BatteryService extends SystemService {
                     }
                 } else {
                     // Battery is charging and halfway full
-                    if (!mLedChargePulseEnabled) mBatteryLight.setColor(mBatteryMediumARGB);
+                    mBatteryLight.setColor(mBatteryMediumARGB);
 		    if (mLedChargePulseEnabled)
 		       {
 		        mBatteryLight.setFlashing(mBatteryMediumARGB, Light.LIGHT_FLASH_TIMED,
