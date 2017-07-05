@@ -4431,6 +4431,13 @@ public final class Settings {
 	public static final String PROXIMITY_AUTO_SPEAKER_INCALL_ONLY = "proximity_auto_speaker_incall_only";
 
         /**
+         * Dialer proximity autoanswer settings
+         * @hide
+         */
+
+	public static final String PROXIMITY_AUTO_ANSWER_INCALL_ONLY = "proximity_auto_answer_incall_only";
+
+        /**
          * Dialer opencnam settings
          * @hide
          */
