@@ -989,16 +989,14 @@ public final class BatteryService extends SystemService {
             } else if (level < mLowBatteryWarningLevel) {
                 if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
                     // Battery is charging and low
-                    mBatteryLight.setColor(mBatteryLowARGB);
-		if (mLedChargePulseEnabled)
+                    
+		if (mLedChargePulseEnabled || mLedPulseEnabled)
 		    {
 		    mBatteryLight.setFlashing(mBatteryLowARGB, Light.LIGHT_FLASH_TIMED,
                             mBatteryLedOn, mBatteryLedOff);
-		    }
-                } else if (mLedPulseEnabled) {
-                    // Battery is low and not charging
-                    mBatteryLight.setFlashing(mBatteryLowARGB, Light.LIGHT_FLASH_TIMED,
-                            mBatteryLedOn, mBatteryLedOff);
+            	    } else if (!mLedChargePulseEnabled) {
+			    mBatteryLight.setColor(mBatteryLowARGB);
+		}
                 } else {
                     // "Pulse low battery light" is disabled, no lights.
                     mBatteryLight.turnOff();
@@ -1011,21 +1009,20 @@ public final class BatteryService extends SystemService {
                         mBatteryLight.setColor(mBatteryReallyFullARGB);
                     } else {
                         // Battery is full or charging and nearly full
-                        mBatteryLight.setColor(mBatteryFullARGB);
 		    if (mLedChargePulseEnabled)
 		       {
 		        mBatteryLight.setFlashing(mBatteryFullARGB, Light.LIGHT_FLASH_TIMED,
                             mBatteryLedOn, mBatteryLedOff);
-		       }
+		       } else if (!mLedChargePulseEnabled) mBatteryLight.setColor(mBatteryFullARGB);
                     }
                 } else {
                     // Battery is charging and halfway full
-                    mBatteryLight.setColor(mBatteryMediumARGB);
+
 		    if (mLedChargePulseEnabled)
 		       {
 		        mBatteryLight.setFlashing(mBatteryMediumARGB, Light.LIGHT_FLASH_TIMED,
                             mBatteryLedOn, mBatteryLedOff);
-		       }
+		       } else if (!mLedChargePulseEnabled) mBatteryLight.setColor(mBatteryMediumARGB);
                 }
             } else {
                 // No lights if not charging and not low
