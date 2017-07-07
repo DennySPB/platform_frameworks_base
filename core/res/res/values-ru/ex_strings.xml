@@ -25,7 +25,7 @@
   <!-- Button to reboot the phone into bootloader in restart menu -->
   <string name="reboot_bootloader">Загрузчик</string>
   <!-- Button to soft reboot the device in restart menu -->
-  <string name="reboot_soft">Перезапуск интерфейса</string>
+  <string name="reboot_soft">Быстрая перезагрузка</string>
   <!-- Reboot Confirmation Dialog. -->
   <string name="reboot_confirm" product="tablet">Ваш планшет будет перезагружен.</string>
   <string name="reboot_confirm" product="default">Ваш телефон будет перезагружен.</string>
