@@ -4423,6 +4423,21 @@ public final class Settings {
 
 	public static final String PROXIMITY_AUTO_SPEAKER_DELAY = "proximity_auto_speaker_delay";
 
+
+        /**
+         * Dialer autoanswer settings
+         * @hide
+         */
+
+	public static final String AUTO_ANSWER_CALL_KEY = "auto_answer_call_key";
+
+        /**
+         * Dialer autoanswer delay settings
+         * @hide
+         */
+
+	public static final String AUTO_ANSWER_DELAY = "auto_answer_delay";
+
         /**
          * Dialer proximity speaker settings
          * @hide
@@ -5233,12 +5248,6 @@ public final class Settings {
          * @hide
          */
         public static final String NAVBAR_TINT_SWITCH = "navbar_tint_switch";
-
-        /**
-         * Whether to display cross sign for a data disabled connection
-         * @hide
-         */
-        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
 
          /**
          * Navbar Button Color
