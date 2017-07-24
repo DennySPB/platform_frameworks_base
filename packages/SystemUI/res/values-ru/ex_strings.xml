@@ -279,4 +279,6 @@
     <string name="quick_settings_gesture_anywhere_on">Жест везде вкл.</string>
     <string name="quick_settings_gesture_anywhere_off">Жест везде выкл.</string>
 
+    <string name="quick_settings_volume_panel_label">Панель громкости</string>
+
 </resources>

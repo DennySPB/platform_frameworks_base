@@ -110,7 +110,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-        hotspot,inversion,saver,work,cast,screenshot,sync,gesture_anywhere,extensions,reboot,usb_tether,music,ime,locale,caffeine,navigation_bar,expanded_desktop,heads_up,pulse,screenrecord,weather,adb_network,compass
+        hotspot,inversion,saver,work,cast,screenshot,sync,gesture_anywhere,extensions,reboot,usb_tether,music,volume_panel,ime,locale,caffeine,navigation_bar,expanded_desktop,heads_up,pulse,screenrecord,weather,adb_network,compass
     </string>
 
     <!-- The tiles to display in QuickSettings -->
