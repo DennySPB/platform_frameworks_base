@@ -5284,6 +5284,21 @@ public final class Settings {
          */
          public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
 
+
+        /**
+         * Incall menu key behavior
+         * @hide
+         */
+         public static final String INCALL_MENU_DISABLE = "incall_menu_disable";
+
+	/**
+         * Whether to use the MTP by default after connecting to PC
+         * @hide
+         */
+         public static final String MTP_DIRTY_HACK = "mtp_dirty_hack";
+         public static final String MTP_DIRTY_HACK_SAVE = "mtp_dirty_hack_save";
+
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.

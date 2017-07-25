@@ -88,7 +88,7 @@ public class HardkeyActionHandler {
 
     // Behavior of HOME button during incomming call ring.
     // (See Settings.Secure.RING_HOME_BUTTON_BEHAVIOR.)
-//    int mRingHomeBehavior;
+    int mRingMenuBehavior;
     // HapticOnAction
     boolean mHapOnAction;
     boolean HomePressed = false;
@@ -295,6 +295,13 @@ public class HardkeyActionHandler {
                 if (canceled || keyguardOn) {
                     return true;
                 }
+
+                TelecomManager telecomManager = getTelecommService();
+                if (telecomManager != null && (telecomManager.isRinging() || telecomManager.isInCall())) {
+                    if (mRingMenuBehavior == 0) {
+                        return true;
+            	    }
+		}
 		if (HomePressed) {
 		    HomePressed = false;
 		    return true;
@@ -690,9 +697,9 @@ public class HardkeyActionHandler {
                     Settings.Secure.getUriFor(ActionConstants.getDefaults(ActionConstants.HWKEYS)
                             .getUri()), false,
                     this, UserHandle.USER_ALL);
-//            resolver.registerContentObserver(Settings.System.getUriFor(
-//                    Settings.Secure.RING_HOME_BUTTON_BEHAVIOR), false, this,
-//                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.INCALL_MENU_DISABLE), false, this,
+                    UserHandle.USER_ALL);
             resolver.registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE), false, this,
                     UserHandle.USER_ALL);
@@ -768,10 +775,9 @@ public class HardkeyActionHandler {
             msg.arg1 = hasMenuKeyEnabled ? 1 : 0;
             mHandler.sendMessage(msg);
 
-//            mRingHomeBehavior = Settings.Secure.getIntForUser(cr,
-//                    Settings.Secure.RING_HOME_BUTTON_BEHAVIOR,
-//                    Settings.Secure.RING_HOME_BUTTON_BEHAVIOR_DEFAULT,
-//                    UserHandle.USER_CURRENT);
+            mRingMenuBehavior = Settings.System.getIntForUser(cr,
+                    Settings.System.INCALL_MENU_DISABLE,1,
+                    UserHandle.USER_CURRENT);
             mHapOnAction = (Settings.System.getIntForUser(cr,
                     Settings.System.HAPTIC_ON_ACTION_KEY, 0, UserHandle.USER_CURRENT) == 1);
     	    DeviceHaveMechHome = mContext.getResources().getBoolean(
