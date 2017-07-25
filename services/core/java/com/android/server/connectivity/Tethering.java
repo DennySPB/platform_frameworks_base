@@ -29,6 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
@@ -1144,6 +1145,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         synchronized (mPublicSync) {
             if (enable) {
                 if (mRndisEnabled) {
+		   int currentState = Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.MTP_DIRTY_HACK, 1);
+                Settings.System.putInt(mContext.getContentResolver(),
+                       Settings.System.MTP_DIRTY_HACK_SAVE, currentState);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MTP_DIRTY_HACK, 0);
                     final long ident = Binder.clearCallingIdentity();
                     try {
                         tetherMatchingInterfaces(true, ConnectivityManager.TETHERING_USB);
@@ -1155,6 +1162,10 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                     usbManager.setCurrentFunction(UsbManager.USB_FUNCTION_RNDIS, false);
                 }
             } else {
+		int oldState = Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.MTP_DIRTY_HACK_SAVE, 1);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MTP_DIRTY_HACK, oldState);
                 final long ident = Binder.clearCallingIdentity();
                 try {
                     tetherMatchingInterfaces(false, ConnectivityManager.TETHERING_USB);
