@@ -4503,6 +4503,28 @@ public final class Settings {
         public static final String RING_HOME_BUTTON_BEHAVIOR = "ring_home_button_behavior";
 
          /**
+         * Incall UI background primary color
+         * @hide
+         */
+
+        public static final String INCALL_BG_PRIMARY = "incall_bg_primary";
+
+         /**
+         * Incall UI background secondary color
+         * @hide
+         */
+
+        public static final String INCALL_BG_SECONDARY = "incall_bg_secondary";
+
+         /**
+         * Incall UI background switch
+         * @hide
+         */
+
+        public static final String INCALL_BG_KEY = "incall_bg_key";
+
+
+         /**
          * Color temp string for nightdisplay options
          * @hide
          */
