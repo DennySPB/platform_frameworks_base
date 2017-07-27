@@ -245,6 +245,7 @@ public class HardkeyActionHandler {
 
             if (!down) {
 		HomePressed = true;
+		mHomeButton.cancelLP();
                 return true;
             }
 
@@ -271,11 +272,11 @@ public class HardkeyActionHandler {
                     if (!mHomeButton.keyHasLongPressRecents()) {
                         ActionHandler.cancelPreloadRecentApps();
                     }
-		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
 //                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
 		    HomePressed = true;
                     mHomeButton.fireLongPress();
-                    mHomeButton.setWasConsumed(true);
+//                    mHomeButton.setWasConsumed(true);
                 }
             }
             return true;
@@ -322,6 +323,7 @@ public class HardkeyActionHandler {
             }
 
             if (!down) {
+		mMenuButton.cancelLP();
                 return true;
             }
 
@@ -331,7 +333,7 @@ public class HardkeyActionHandler {
                 if (mMenuButton.isDoubleTapPending()) {
                     mMenuButton.setDoubleTapPending(false);
                     mMenuButton.cancelDTTimeout();
-		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mMenuButton.fireDoubleTap();
                     mMenuButton.setWasConsumed(true);
                 } else if (mMenuButton.keyHasLongPressRecents()
@@ -347,9 +349,9 @@ public class HardkeyActionHandler {
                     if (!mMenuButton.keyHasLongPressRecents()) {
                         ActionHandler.cancelPreloadRecentApps();
                     }
-                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mMenuButton.fireLongPress();
-                    mMenuButton.setWasConsumed(true);
+//                    mMenuButton.setWasConsumed(true);
                 }
             }
             return true;
@@ -383,12 +385,13 @@ public class HardkeyActionHandler {
                     ActionHandler.cancelPreloadRecentApps();
                 }
 
-		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                 mRecentButton.fireSingleTap();
                 return true;
             }
 
             if (!down) {
+		mRecentButton.cancelLP();
                 return true;
             }
 
@@ -398,7 +401,7 @@ public class HardkeyActionHandler {
                 if (mRecentButton.isDoubleTapPending()) {
                     mRecentButton.setDoubleTapPending(false);
                     mRecentButton.cancelDTTimeout();
-		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mRecentButton.fireDoubleTap();
                     mRecentButton.setWasConsumed(true);
                 } else if (mRecentButton.keyHasLongPressRecents()
@@ -414,9 +417,9 @@ public class HardkeyActionHandler {
                     if (!mRecentButton.keyHasLongPressRecents()) {
                         ActionHandler.cancelPreloadRecentApps();
                     }
-                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mRecentButton.fireLongPress();
-                    mRecentButton.setWasConsumed(true);
+//                    mRecentButton.setWasConsumed(true);
                 }
             }
             return true;
@@ -453,6 +456,7 @@ public class HardkeyActionHandler {
             }
 
             if (!down) {
+		mAssistButton.cancelLP();
                 return true;
             }
 
@@ -477,7 +481,7 @@ public class HardkeyActionHandler {
                     if (!mAssistButton.keyHasLongPressRecents()) {
                         ActionHandler.cancelPreloadRecentApps();
                     }
-                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mAssistButton.fireLongPress();
                     mAssistButton.setWasConsumed(true);
                 }
@@ -509,13 +513,13 @@ public class HardkeyActionHandler {
                     mBackButton.postDTTimeout();
                     return true;
                 }
-
 		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                 mBackButton.fireSingleTap();
                 return true;
             }
 
             if (!down) {
+		mBackButton.cancelLP();
                 return true;
             }
 
@@ -525,7 +529,6 @@ public class HardkeyActionHandler {
                 if (mBackButton.isDoubleTapPending()) {
                     mBackButton.setDoubleTapPending(false);
                     mBackButton.cancelDTTimeout();
-		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mBackButton.fireDoubleTap();
                     mBackButton.setWasConsumed(true);
                 } else if (mBackButton.keyHasLongPressRecents()
@@ -538,7 +541,7 @@ public class HardkeyActionHandler {
                     mBackButton.setPressed(true);
                     if (ActionHandler.isLockTaskOn()) {
                         ActionHandler.turnOffLockTask();
-                        mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//                        mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                         mBackButton.setWasConsumed(true);
                     } else {
                         if (mBackButton.isLongTapEnabled()) {
@@ -546,8 +549,7 @@ public class HardkeyActionHandler {
                                 ActionHandler.cancelPreloadRecentApps();
                             }
                             mBackButton.fireLongPress();
-                            mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
-                            mBackButton.setWasConsumed(true);
+//                            mBackButton.setWasConsumed(true);
                         }
                     }
                 }
@@ -587,6 +589,7 @@ public class HardkeyActionHandler {
             }
         };
 
+
         final Runnable mSTRunnable = new Runnable() {
             public void run() {
                 mActionReceiver.onActionDispatched(HardKeyButton.this, mConfig.getActionConfig(ActionConfig.PRIMARY).getAction());
@@ -595,12 +598,14 @@ public class HardkeyActionHandler {
 
         final Runnable mDTRunnable = new Runnable() {
             public void run() {
+		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                 mActionReceiver.onActionDispatched(HardKeyButton.this, mConfig.getActionConfig(ActionConfig.THIRD).getAction());
             }
         };
 
         final Runnable mLPRunnable = new Runnable() {
             public void run() {
+                mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                 mActionReceiver.onActionDispatched(HardKeyButton.this, mConfig.getActionConfig(ActionConfig.SECOND).getAction());
             }
         };
@@ -660,7 +665,7 @@ public class HardkeyActionHandler {
         }
 
         void fireLongPress() {
-            mHandler.post(mLPRunnable);
+            mHandler.postDelayed(mLPRunnable, ViewConfiguration.getLongPressTimeout());
         }
 
         void fireSingleTap() {
@@ -674,6 +679,11 @@ public class HardkeyActionHandler {
         void postDTTimeout() {
             mHandler.postDelayed(mDoubleTapTimeout, ViewConfiguration.getDoubleTapTimeout());
         }
+
+        void cancelLP() {
+            mHandler.removeCallbacks(mLPRunnable);
+        }
+
     }
 
     private TelecomManager getTelecommService() {
