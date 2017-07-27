@@ -142,6 +142,7 @@ public class VolumeDialog implements TunerService.Tunable {
     private long mCollapseTime;
     private boolean mHovering = false;
     private int mDensity;
+    private int mVolumeDialogAlpha;
 
     private boolean mShowFullZen;
     private TunerZenModePanel mZenPanel;
@@ -658,6 +659,7 @@ public class VolumeDialog implements TunerService.Tunable {
 
     private void updateRowsH(final VolumeRow activeRow) {
         if (D.BUG) Log.d(TAG, "updateRowsH");
+	setVolumeAlpha();
         if (!mShowing) {
             trimObsoleteH();
         }
@@ -1287,4 +1289,13 @@ public class VolumeDialog implements TunerService.Tunable {
         void onZenSettingsClicked();
         void onZenPrioritySettingsClicked();
     }
+
+     private void setVolumeAlpha() {
+        mVolumeDialogAlpha = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.TRANSPARENT_VOLUME_DIALOG, 255);
+        if (mDialogView != null) {
+            mDialogView.getBackground().setAlpha(mVolumeDialogAlpha);
+        }
+    }
+
 }

@@ -5306,6 +5306,12 @@ public final class Settings {
          */
          public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
 
+        /**
+         * Volume dialog timeout
+         * @hide
+         */
+         public static final String TRANSPARENT_VOLUME_DIALOG = "transparent_volume_dialog";
+
 
         /**
          * Incall menu key behavior
