@@ -385,7 +385,7 @@ public class HardkeyActionHandler {
                     ActionHandler.cancelPreloadRecentApps();
                 }
 
-//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                 mRecentButton.fireSingleTap();
                 return true;
             }
