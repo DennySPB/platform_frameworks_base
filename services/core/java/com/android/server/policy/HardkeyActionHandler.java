@@ -333,7 +333,7 @@ public class HardkeyActionHandler {
                 if (mMenuButton.isDoubleTapPending()) {
                     mMenuButton.setDoubleTapPending(false);
                     mMenuButton.cancelDTTimeout();
-//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mMenuButton.fireDoubleTap();
                     mMenuButton.setWasConsumed(true);
                 } else if (mMenuButton.keyHasLongPressRecents()
@@ -401,7 +401,7 @@ public class HardkeyActionHandler {
                 if (mRecentButton.isDoubleTapPending()) {
                     mRecentButton.setDoubleTapPending(false);
                     mRecentButton.cancelDTTimeout();
-//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mRecentButton.fireDoubleTap();
                     mRecentButton.setWasConsumed(true);
                 } else if (mRecentButton.keyHasLongPressRecents()
@@ -466,6 +466,7 @@ public class HardkeyActionHandler {
                 if (mAssistButton.isDoubleTapPending()) {
                     mAssistButton.setDoubleTapPending(false);
                     mAssistButton.cancelDTTimeout();
+		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mAssistButton.fireDoubleTap();
                     mAssistButton.setWasConsumed(true);
                 } else if (mAssistButton.keyHasLongPressRecents()
@@ -529,6 +530,7 @@ public class HardkeyActionHandler {
                 if (mBackButton.isDoubleTapPending()) {
                     mBackButton.setDoubleTapPending(false);
                     mBackButton.cancelDTTimeout();
+		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mBackButton.fireDoubleTap();
                     mBackButton.setWasConsumed(true);
                 } else if (mBackButton.keyHasLongPressRecents()
@@ -598,14 +600,14 @@ public class HardkeyActionHandler {
 
         final Runnable mDTRunnable = new Runnable() {
             public void run() {
-		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                 mActionReceiver.onActionDispatched(HardKeyButton.this, mConfig.getActionConfig(ActionConfig.THIRD).getAction());
             }
         };
 
         final Runnable mLPRunnable = new Runnable() {
             public void run() {
-                mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+//                mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                 mActionReceiver.onActionDispatched(HardKeyButton.this, mConfig.getActionConfig(ActionConfig.SECOND).getAction());
             }
         };
