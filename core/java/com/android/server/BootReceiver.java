@@ -278,6 +278,10 @@ public class BootReceiver extends BroadcastReceiver {
         if (fileTime <= 0) {
             file = new File("/sys/fs/pstore/console-ramoops");
             fileTime = file.lastModified();
+            if (fileTime <= 0) {
+                file = new File("/sys/fs/pstore/console-ramoops-0");
+                fileTime = file.lastModified();
+            }
         }
          if (fileTime <= 0) {
                 file = new File("/sys/fs/pstore/console-ramoops-0");
