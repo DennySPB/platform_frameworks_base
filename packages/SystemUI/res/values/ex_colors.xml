@@ -33,5 +33,6 @@
     <color name="ripple_material_dark">#40ffffff</color>
     <!-- Custom Carrier Label -->
     <color name="status_bar_carrier_color">#FFFFFFFF</color>
+    <color name="system_accent_color">@*android:color/accent_material_dark</color>
 
 </resources>
