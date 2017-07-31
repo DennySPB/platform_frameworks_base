@@ -91,7 +91,6 @@ public class HardkeyActionHandler {
     int mRingMenuBehavior;
     // HapticOnAction
     boolean mHapOnAction;
-    boolean HomePressed = false;
 
     private ActionReceiver mActionReceiver = new ActionReceiver() {
         @Override
@@ -201,6 +200,9 @@ public class HardkeyActionHandler {
                     Log.i(TAG, "Ignoring HOME; there's a ringing incoming call.");
                     return true;
                 }
+	    // We suggest that device (gemini) has capacitivity Menu button mapped on mechanical key Home 
+	    // and we don't need any events from Menu button, when Home is pressed
+		mMenuButton.setWasConsumed(true);
 
                 if (mHomeButton.isDoubleTapEnabled()) {
                     mHomeButton.cancelDTTimeout();
@@ -209,7 +211,6 @@ public class HardkeyActionHandler {
                     return true;
                 }
 		if (mHapOnAction && (!DeviceHaveMechHome)) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
-		HomePressed = true;
                 mHomeButton.fireSingleTap();
                 return true;
             }
@@ -244,20 +245,17 @@ public class HardkeyActionHandler {
 
 
             if (!down) {
-		HomePressed = true;
 		mHomeButton.cancelLP();
                 return true;
             }
 
             if (repeatCount == 0) {
                 mHomeButton.setPressed(true);
-		HomePressed = true;
                 fireBooster(mHomeButton);
                 if (mHomeButton.isDoubleTapPending()) {
                     mHomeButton.setDoubleTapPending(false);
                     mHomeButton.cancelDTTimeout();
 		if (mHapOnAction && (!DeviceHaveMechHome)) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
-//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mHomeButton.fireDoubleTap();
                     mHomeButton.setWasConsumed(true);
                 } else if (mHomeButton.keyHasLongPressRecents()
@@ -272,11 +270,7 @@ public class HardkeyActionHandler {
                     if (!mHomeButton.keyHasLongPressRecents()) {
                         ActionHandler.cancelPreloadRecentApps();
                     }
-//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
-//                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
-		    HomePressed = true;
                     mHomeButton.fireLongPress();
-//                    mHomeButton.setWasConsumed(true);
                 }
             }
             return true;
@@ -302,10 +296,6 @@ public class HardkeyActionHandler {
                     if (mRingMenuBehavior == 0) {
                         return true;
             	    }
-		}
-		if (HomePressed) {
-		    HomePressed = false;
-		    return true;
 		}
                 if (mMenuButton.isDoubleTapEnabled()) {
                     mMenuButton.setDoubleTapPending(true);
@@ -349,9 +339,7 @@ public class HardkeyActionHandler {
                     if (!mMenuButton.keyHasLongPressRecents()) {
                         ActionHandler.cancelPreloadRecentApps();
                     }
-//                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mMenuButton.fireLongPress();
-//                    mMenuButton.setWasConsumed(true);
                 }
             }
             return true;
@@ -417,9 +405,7 @@ public class HardkeyActionHandler {
                     if (!mRecentButton.keyHasLongPressRecents()) {
                         ActionHandler.cancelPreloadRecentApps();
                     }
-//                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mRecentButton.fireLongPress();
-//                    mRecentButton.setWasConsumed(true);
                 }
             }
             return true;
@@ -482,7 +468,6 @@ public class HardkeyActionHandler {
                     if (!mAssistButton.keyHasLongPressRecents()) {
                         ActionHandler.cancelPreloadRecentApps();
                     }
-//                    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                     mAssistButton.fireLongPress();
                     mAssistButton.setWasConsumed(true);
                 }
@@ -543,7 +528,6 @@ public class HardkeyActionHandler {
                     mBackButton.setPressed(true);
                     if (ActionHandler.isLockTaskOn()) {
                         ActionHandler.turnOffLockTask();
-//                        mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                         mBackButton.setWasConsumed(true);
                     } else {
                         if (mBackButton.isLongTapEnabled()) {
@@ -551,7 +535,6 @@ public class HardkeyActionHandler {
                                 ActionHandler.cancelPreloadRecentApps();
                             }
                             mBackButton.fireLongPress();
-//                            mBackButton.setWasConsumed(true);
                         }
                     }
                 }
@@ -600,15 +583,17 @@ public class HardkeyActionHandler {
 
         final Runnable mDTRunnable = new Runnable() {
             public void run() {
-//		if (mHapOnAction) mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
                 mActionReceiver.onActionDispatched(HardKeyButton.this, mConfig.getActionConfig(ActionConfig.THIRD).getAction());
             }
         };
 
         final Runnable mLPRunnable = new Runnable() {
             public void run() {
-//                mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
-                mActionReceiver.onActionDispatched(HardKeyButton.this, mConfig.getActionConfig(ActionConfig.SECOND).getAction());
+	    // need to consume Menu button when mechanical Home longpressed
+            if (HardKeyButton.this == mHomeButton) mMenuButton.setWasConsumed(true);
+	    HardKeyButton.this.setWasConsumed(true);
+	    mHandler.sendEmptyMessage(MSG_DO_HAPTIC_FB);
+            mActionReceiver.onActionDispatched(HardKeyButton.this, mConfig.getActionConfig(ActionConfig.SECOND).getAction());
             }
         };
 
