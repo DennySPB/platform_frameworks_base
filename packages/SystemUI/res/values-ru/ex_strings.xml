@@ -278,7 +278,14 @@
     <string name="quick_settings_gesture_anywhere_label">Жест везде</string>
     <string name="quick_settings_gesture_anywhere_on">Жест везде вкл.</string>
     <string name="quick_settings_gesture_anywhere_off">Жест везде выкл.</string>
-
     <string name="quick_settings_volume_panel_label">Панель громкости</string>
+
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Остановить принудительно?</string>
+    <string name="force_stop_dlg_text">Если вы принудительно остановите приложение, это может привести к неправильной работе.</string>
+    <string name="dlg_ok">OK</string>
+    <string name="dlg_cancel">Отмена</string>
+    <string name="kill">Закрыть приложение</string>
+
 
 </resources>

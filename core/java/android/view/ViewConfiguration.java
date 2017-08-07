@@ -415,7 +415,7 @@ public class ViewConfiguration {
                 com.android.internal.R.dimen.config_scrollFactor);
     }
 
-  public static boolean isNumeric(String string) {
+    public static boolean isNumeric(String string) {
         try {
             Integer.parseInt(string);
         } catch(NumberFormatException e) {
@@ -423,6 +423,7 @@ public class ViewConfiguration {
         }
         return true;
     }
+
     /**
      * Returns a configuration for the specified context. The configuration depends on
      * various parameters of the context, like the dimension of the display or the

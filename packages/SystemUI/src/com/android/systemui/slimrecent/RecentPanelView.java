@@ -77,6 +77,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Our main view controller which handles and construct most of the view
@@ -133,12 +135,16 @@ public class RecentPanelView {
     private boolean mIsLoading;
 
     private int mMainGravity;
+    private int mMaxAppsToLoad;
     private float mScaleFactor;
     private int mExpandedMode = EXPANDED_MODE_AUTO;
+    private boolean mIsScreenPinningEnabled;
     private boolean mShowTopTask;
     private boolean mOnlyShowRunningTasks;
     private static int mOneHandMode;
     private static int mCardColor = 0x0ffffff;
+
+    private String mCurrentFavorites = "";
 
     final static BitmapFactory.Options sBitmapOptions;
 
@@ -273,7 +279,7 @@ public class RecentPanelView {
             final boolean isExpanded =
                     ((isSystemExpanded && !isUserCollapsed) || isUserExpanded) && !isTopTask;
 
-            boolean screenPinningEnabled = screenPinningEnabled();
+            boolean screenPinningEnabled = mIsScreenPinningEnabled;
             expanded = isExpanded;
             expandVisible = !isTopTask;
             customIcon = isTopTask && screenPinningEnabled;
@@ -292,11 +298,6 @@ public class RecentPanelView {
                     }
                 }
             };
-        }
-
-        private boolean screenPinningEnabled() {
-            return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_TO_APP_ENABLED, 0) != 0;
         }
 
         private Intent getAppInfoIntent() {
@@ -458,6 +459,8 @@ public class RecentPanelView {
                             /*after we docked our main app, on the other side of the screen we
                             open the app we dragged the main app over*/
                             mController.openOnDraggedApptoOtherSide((finalPos > initPos) ? newTaskid : taskid);
+                            //now no need to keep the panel open, we already chose both top and bottom apps
+                            mController.closeRecents();
                         } catch (RemoteException e) {}
                     }
                 //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
@@ -528,9 +531,7 @@ public class RecentPanelView {
      */
     private void handleFavoriteEntry(TaskDescription td) {
         ContentResolver resolver = mContext.getContentResolver();
-        final String favorites = Settings.System.getStringForUser(
-                    resolver, Settings.System.RECENT_PANEL_FAVORITES,
-                    UserHandle.USER_CURRENT);
+        final String favorites = mCurrentFavorites;
         String entryToSave = "";
 
         if (!td.getIsFavorite()) {
@@ -555,6 +556,7 @@ public class RecentPanelView {
 
         td.setIsFavorite(!td.getIsFavorite());
 
+        RecentController.shouldHidePanel = false;
         Settings.System.putStringForUser(
                 resolver, Settings.System.RECENT_PANEL_FAVORITES,
                 entryToSave,
@@ -904,6 +906,10 @@ public class RecentPanelView {
         mCardColor = color;
     }
 
+    protected void setCurrentFavorites(String favorites) {
+        mCurrentFavorites = favorites;
+    }
+
     /**
      * Notify listener that tasks are loaded.
      */
@@ -964,10 +970,8 @@ public class RecentPanelView {
             mCounter = 0;
 
             // Check and get user favorites.
-            final String favorites = Settings.System.getStringForUser(
-                    mContext.getContentResolver(), Settings.System.RECENT_PANEL_FAVORITES,
-                    UserHandle.USER_CURRENT);
-            final ArrayList<String> favList = new ArrayList<>();
+            final String favorites = mCurrentFavorites;
+            final Set<String> favList = new HashSet<String>();
             final ArrayList<TaskDescription> nonFavoriteTasks = new ArrayList<>();
             if (favorites != null && !favorites.isEmpty()) {
                 for (String favorite : favorites.split("\\|")) {
@@ -978,10 +982,6 @@ public class RecentPanelView {
             final PackageManager pm = mContext.getPackageManager();
             final ActivityManager am = (ActivityManager)
                     mContext.getSystemService(Context.ACTIVITY_SERVICE);
-
-            int maxNumTasksToLoad = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.RECENTS_MAX_APPS, 15,
-                    UserHandle.USER_CURRENT);
 
             final List<ActivityManager.RecentTaskInfo> recentTasks =
                     am.getRecentTasksForUser(ActivityManager.getMaxRecentTasksStatic(),
@@ -1047,70 +1047,68 @@ public class RecentPanelView {
                         recentInfo.origActivity, recentInfo.description,
                         false, EXPANDED_STATE_UNKNOWN, recentInfo.taskDescription);
 
-                if (item != null) {
-                    // Remove any tasks after our max task limit to keep good ux
-                    if (i >= maxNumTasksToLoad) {
-                        am.removeTask(item.persistentTaskId);
-                        continue;
-                    }
-                    for (String fav : favList) {
-                        if (fav.equals(item.identifier)) {
-                            item.setIsFavorite(true);
-                            break;
-                        }
-                    }
+                if (item == null) {
+                    continue; //skip this item and go to next iteration
+                }
+                // Remove any tasks after our max task limit to keep good ux
+                if (i >= mMaxAppsToLoad) {
+                    am.removeTask(item.persistentTaskId);
+                    continue;
+                }
+                if (favList.contains(item.identifier)) {
+                    item.setIsFavorite(true);
+                }
 
-                    if (topTask) {
-                        if (mShowTopTask || screenPinningEnabled()) {
-                            // User want to see actual running task. Set it here
-                            int oldState = getExpandedState(item);
-                            if ((oldState & EXPANDED_STATE_TOPTASK) == 0) {
-                                oldState |= EXPANDED_STATE_TOPTASK;
-                            }
-                            item.setExpandedState(oldState);
-                            addCard(item, oldSize, true);
-                            mFirstTask = item;
-                        } else {
-                            // Skip the first task for our list but save it for later use.
-                           mFirstTask = item;
-                           newSize--;
-                        }
-                    } else {
-                        // FirstExpandedItems value forces to show always the app screenshot
-                        // if the old state is not known and the user has set expanded mode to auto.
-                        // On all other items we check if they were expanded from the user
-                        // in last known recent app list and restore the state. This counts as well
-                        // if expanded mode is always or never.
+                if (topTask) {
+                    if (mShowTopTask || mIsScreenPinningEnabled) {
+                        // User want to see actual running task. Set it here
                         int oldState = getExpandedState(item);
-                        if ((oldState & EXPANDED_STATE_BY_SYSTEM) != 0) {
-                            oldState &= ~EXPANDED_STATE_BY_SYSTEM;
+                        if ((oldState & EXPANDED_STATE_TOPTASK) == 0) {
+                            oldState |= EXPANDED_STATE_TOPTASK;
                         }
-                        if ((oldState & EXPANDED_STATE_TOPTASK) != 0) {
-                            oldState &= ~EXPANDED_STATE_TOPTASK;
+                        item.setExpandedState(oldState);
+                        addCard(item, oldSize, true);
+                        mFirstTask = item;
+                    } else {
+                        // Skip the first task for our list but save it for later use.
+                        mFirstTask = item;
+                        newSize--;
+                    }
+                } else {
+                    // FirstExpandedItems value forces to show always the app screenshot
+                    // if the old state is not known and the user has set expanded mode to auto.
+                    // On all other items we check if they were expanded from the user
+                    // in last known recent app list and restore the state. This counts as well
+                    // if expanded mode is always or never.
+                    int oldState = getExpandedState(item);
+                    if ((oldState & EXPANDED_STATE_BY_SYSTEM) != 0) {
+                        oldState &= ~EXPANDED_STATE_BY_SYSTEM;
+                    }
+                    if ((oldState & EXPANDED_STATE_TOPTASK) != 0) {
+                        oldState &= ~EXPANDED_STATE_TOPTASK;
+                    }
+                    if (DEBUG) Log.v(TAG, "old expanded state = " + oldState);
+                    if (firstItems < firstExpandedItems) {
+                        if (mExpandedMode != EXPANDED_MODE_NEVER) {
+                            oldState |= EXPANDED_STATE_BY_SYSTEM;
                         }
-                        if (DEBUG) Log.v(TAG, "old expanded state = " + oldState);
-                        if (firstItems < firstExpandedItems) {
-                            if (mExpandedMode != EXPANDED_MODE_NEVER) {
-                                oldState |= EXPANDED_STATE_BY_SYSTEM;
-                            }
-                            item.setExpandedState(oldState);
-                            // The first tasks are always added to the task list.
+                        item.setExpandedState(oldState);
+                        // The first tasks are always added to the task list.
+                        addCard(item, oldSize, false);
+                    } else {
+                        if (mExpandedMode == EXPANDED_MODE_ALWAYS) {
+                            oldState |= EXPANDED_STATE_BY_SYSTEM;
+                        }
+                        item.setExpandedState(oldState);
+                        // Favorite tasks are added next. Non favorite
+                        // we hold for a short time in an extra list.
+                        if (item.getIsFavorite()) {
                             addCard(item, oldSize, false);
                         } else {
-                            if (mExpandedMode == EXPANDED_MODE_ALWAYS) {
-                                oldState |= EXPANDED_STATE_BY_SYSTEM;
-                            }
-                            item.setExpandedState(oldState);
-                            // Favorite tasks are added next. Non favorite
-                            // we hold for a short time in an extra list.
-                            if (item.getIsFavorite()) {
-                                addCard(item, oldSize, false);
-                            } else {
-                                nonFavoriteTasks.add(item);
-                            }
+                            nonFavoriteTasks.add(item);
                         }
-                        firstItems++;
                     }
+                    firstItems++;
                 }
             }
 
@@ -1256,9 +1254,12 @@ public class RecentPanelView {
         return null;
     }
 
-    private boolean screenPinningEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_TO_APP_ENABLED, 0) != 0;
+    protected void isScreenPinningEnabled(boolean enabled) {
+        mIsScreenPinningEnabled = enabled;
+    }
+
+    protected void setMaxAppsToLoad(int max) {
+        mMaxAppsToLoad = max;
     }
 
     /**
