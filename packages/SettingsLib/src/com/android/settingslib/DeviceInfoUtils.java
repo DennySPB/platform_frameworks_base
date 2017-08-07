@@ -257,7 +257,8 @@ public class DeviceInfoUtils {
                          return m.group(1);
                      }
                  }
-                 return "Unknown";
+//                 return "Unknown";
+		return "Qualcomm Technologies, Inc MSM8996";
              } finally {
                  reader.close();
              }
