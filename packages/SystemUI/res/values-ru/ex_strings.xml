@@ -287,5 +287,9 @@
     <string name="dlg_cancel">Отмена</string>
     <string name="kill">Закрыть приложение</string>
 
+    <!-- Pie controls -->
+    <string name="pie_state_name">Управление Pie</string>
+    <string name="pie_state_summary">Использовать Pie в режиме погружения</string>
+    <string name="pie_battery_level">"УРОВЕНЬ БАТАРЕИ "</string>
 
 </resources>
