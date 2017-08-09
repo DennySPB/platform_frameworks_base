@@ -135,13 +135,14 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
 
     private void teardownConnection() {
         if (mConnection != null) {
-	    if (mInputStream != null) {
+            if (mInputStream != null) {
                 try {
                     mInputStream.close();
                 } catch (IOException e) {
                 }
                 mInputStream = null;
             }
+
             mConnection.disconnect();
             mConnection = null;
 
@@ -302,7 +303,7 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
             mCurrentOffset = offset;
         } catch (IOException e) {
             mTotalSize = -1;
-	    teardownConnection();
+            teardownConnection();
             mCurrentOffset = -1;
 
             throw e;
