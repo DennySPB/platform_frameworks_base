@@ -3250,6 +3250,12 @@ public class TelephonyManager {
     }
 
     /**
+     * Toggle between 3G and LTE (NT_MODE_CDMA, NT_MODE_GLOBAL)
+     * @param boolean to turn on and off LTE
+     */
+    void toggleLTE(boolean on);
+
+    /**
      * @hide
      */
     public void toggle2G(boolean twoGees) {
