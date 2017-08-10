@@ -5315,7 +5315,14 @@ public final class Settings {
          * Whether to allow waking up screen on taping home button
          * @hide
          */
-         public static final String HOME_WAKE_SCREEN = "home_wake_screen";
+
+
+        /* @hide
+         */
+
+        public static final String QUICK_TILE_ADD = "quick_tile_add";
+
+	public static final String HOME_WAKE_SCREEN = "home_wake_screen";
 
         /**
          * Volume dialog timeout
