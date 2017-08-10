@@ -3253,7 +3253,12 @@ public class TelephonyManager {
      * Toggle between 3G and LTE (NT_MODE_CDMA, NT_MODE_GLOBAL)
      * @param boolean to turn on and off LTE
      */
-    void toggleLTE(boolean on);
+    public void toggleLTE(boolean LTE) {
+        try {
+            getITelephony().toggleLTE(LTE);
+        } catch (RemoteException e) {
+        }
+    }
 
     /**
      * @hide

@@ -1215,7 +1215,7 @@ interface ITelephony {
      * @param boolean to turn on and off 2G
      * @hide
      */
-     void toggle2G(boolean on);
+    void toggle2G(boolean on);
 
     /**
      * Toggle between 3G and LTE (NT_MODE_CDMA, NT_MODE_GLOBAL)
@@ -1228,6 +1228,7 @@ interface ITelephony {
      * @param boolean to turn on and off 2G
      * @hide
      */
-     void toggleThreeG(boolean on);
+
+    void toggleThreeG(boolean on);
 
 }
