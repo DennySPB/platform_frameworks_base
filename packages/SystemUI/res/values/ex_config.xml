@@ -58,4 +58,6 @@
     <item name="pie_status_letter_spacing" format="float" type="integer">0.2</item>
     <item name="pie_clock_letter_spacing" format="float" type="integer">0.1</item>
 
+    <!-- Most Devices support LTE. Hence LTE tile is visibile. Devices like Galaxy s2, s3 require this to be false -->
+    <bool name="device_supports_lte">true</bool>
 </resources>

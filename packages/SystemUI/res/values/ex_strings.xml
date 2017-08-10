@@ -327,4 +327,8 @@
     <string name="pie_battery_level">"BATTERY LEVEL "</string>
     <string name="quick_settings_pie">Pie</string>
 
+    <!-- QS LTE -->
+    <string name="quick_settings_lte_label">LTE</string>
+    <string name="lte_on">LTE ON </string>
+    <string name="lte_off">LTE OFF</string>
 </resources>

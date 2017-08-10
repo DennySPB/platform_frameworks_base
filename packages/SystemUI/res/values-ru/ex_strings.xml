@@ -292,4 +292,9 @@
     <string name="pie_state_summary">Использовать Pie в режиме погружения</string>
     <string name="pie_battery_level">"УРОВЕНЬ БАТАРЕИ "</string>
 
+    <!-- QS LTE -->
+    <string name="quick_settings_lte_label">LTE</string>
+    <string name="lte_on">LTE вкл</string>
+    <string name="lte_off">LTE выкл</string>
+
 </resources>

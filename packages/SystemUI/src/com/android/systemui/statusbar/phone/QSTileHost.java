@@ -81,6 +81,7 @@ import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.GestureAnyWhereTile;
 import com.android.systemui.qs.tiles.VolumeTile;
+import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BluetoothController;
 import com.android.systemui.statusbar.policy.CastController;
@@ -489,6 +490,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("adb_network")) return new AdbOverNetworkTile(this);
         else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
 	else if (tileSpec.equals("volume_panel")) return new VolumeTile(this);
+	else if (tileSpec.equals("lte")) return new LteTile(this);
         else if (tileSpec.equals("pie")) return  new PieTile(this);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
