@@ -127,8 +127,16 @@ public class LteTile extends QSTile<QSTile.BooleanState> {
     }
 
     private int getCurrentPreferredNetworkMode() {
-        return Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.PREFERRED_NETWORK_MODE, -1);
+	final int phoneSubId = mSm.getDefaultDataSubId();
+	int network = -1;
+	if(phoneSubId != 0) {
+                network = android.provider.Settings.Global.getInt(mContext.getContentResolver(),
+                    android.provider.Settings.Global.PREFERRED_NETWORK_MODE + phoneSubId, 0);
+            } else {
+                network = android.provider.Settings.Global.getInt(mContext.getContentResolver(),
+                    android.provider.Settings.Global.PREFERRED_NETWORK_MODE, 0);
+            }
+        return network;
     }
 
     @Override
