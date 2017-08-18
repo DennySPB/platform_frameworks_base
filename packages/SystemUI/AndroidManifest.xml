@@ -168,7 +168,7 @@
     <!-- shortcut manager -->
     <uses-permission android:name="android.permission.RESET_SHORTCUT_MANAGER_THROTTLING" />
 
-    <!-- Screen recording & Blur surface -->
+    <!-- Screen recording -->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
     <!-- Sync tile -->
