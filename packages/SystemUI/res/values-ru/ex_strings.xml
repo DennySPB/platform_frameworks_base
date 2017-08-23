@@ -297,4 +297,7 @@
     <string name="lte_on">LTE вкл</string>
     <string name="lte_off">LTE выкл</string>
 
+  <string name="dlg_ok">ОК</string>
+  <string name="dlg_cancel">Отмена</string>
+  <!-- Pie controls -->
 </resources>

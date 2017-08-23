@@ -99,5 +99,4 @@
   <string name="permdesc_restartUI">Перезагружать SystemUIService для того, чтобы системные панели могли загрузить измененные темой ресурсы</string>
   <!-- Pocket Lock -->
   <string name="pocket_lock_message_long_press">Нажмите и ударживайте кнопку питания для взаимодействия</string>
-
 </resources>
