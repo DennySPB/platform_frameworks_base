@@ -22,3 +22,5 @@
             android:tint="@color/fab_color">
     </shape>
 </ripple>
+
+</resources>
