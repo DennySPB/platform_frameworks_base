@@ -33,5 +33,9 @@
 
     <!-- True if the gesture service should be started at system start -->
     <bool name="config_enableGestureService">false</bool>
+
+    <!-- kill app long press back -->
+    <integer name="config_backKillTimeout">500</integer>
+
 </resources>
 
