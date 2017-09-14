@@ -657,9 +657,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DATA_DISABLED_ICON),
                     false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NO_SIM_CLUSTER_SWITCH),
+                    false, this, UserHandle.USER_ALL);
             updateSettings();
         }
-
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
@@ -720,14 +722,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NAVBAR_BUTTON_COLOR))) {
                     mNavigationController.updateNavbarOverlay(mContext.getResources());
-            } else if (uri.equals(Settings.System.getUriFor(
+    	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.DATA_DISABLED_ICON))) {
                     mDataDisabledIcon = Settings.System.getIntForUser(
                         mContext.getContentResolver(),
                         Settings.System.DATA_DISABLED_ICON,
                         1, UserHandle.USER_CURRENT) == 1;
                     mNetworkController.onConfigurationChanged();
-            }
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NO_SIM_CLUSTER_SWITCH))) {
+                    trytoinflateclusters();
+	    }
             updateSettings();
         }
 
@@ -6106,4 +6111,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     }
+
+   public void trytoinflateclusters() {
+      try {
+          inflateSignalClusters();
+      } catch (Exception e) {
+      }
+   }
 }

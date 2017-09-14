@@ -3976,6 +3976,7 @@ public final class Settings {
         public static final String LOCKSCREEN_ENABLE_POWER_MENU = "lockscreen_enable_power_menu";
 
         /**
+<<<<<<< HEAD
          * Number of rows used for the Quick Settings (landscape)
          *
          * @hide
@@ -5412,6 +5413,11 @@ public final class Settings {
          * @hide
          */
         public static final String SENSOR_BLOCK = "sensor_block";
+
+        /** Null Signal indicator disabling switch
+         * @hide
+         */
+        public static final String NO_SIM_CLUSTER_SWITCH = "no_sim_cluster_switch";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
