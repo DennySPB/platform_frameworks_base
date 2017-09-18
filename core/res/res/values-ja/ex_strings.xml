@@ -17,15 +17,27 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Title of dialog to confirm restarting. -->
+  <string name="reboot_title">再起動</string>
   <!-- Button to reboot the phone in restart menu -->
+  <string name="reboot_reboot">再起動</string>
   <!-- Button to reboot the phone into recovery in restart menu-->
+  <string name="reboot_recovery">リカバリー</string>
   <!-- Button to reboot the phone into bootloader in restart menu -->
+  <string name="reboot_bootloader">ブートローダー</string>
   <!-- Button to soft reboot the device in restart menu -->
+  <string name="reboot_soft">ソフトリブート</string>
   <!-- Reboot Confirmation Dialog. -->
   <!-- Reboot Progress Dialog. This is shown if the user chooses to restart the phone. -->
+  <string name="reboot_progress">再起動中...</string>
   <string name="reboot_systemui">システムUIの再起動</string>
   <!-- Global Actions -->
+  <string name="global_action_current_user">現在</string>
+  <string name="global_action_screenshot">スクリーンショット</string>
+  <string name="global_action_screen_record">画面の録画</string>
+  <string name="global_action_search">検索</string>
   <string name="global_action_torch">トーチ</string>
+  <string name="global_action_voicesearch">音声検索</string>
+  <string name="permlab_preventpower">電源ボタンを優先する</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">vendor イメージがシステムと一致しません。お使いの端末に <xliff:g id="string">%s</xliff:g> vendor イメージを導入してください。</string>
@@ -55,11 +67,23 @@
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- ADB over network -->
+  <string name="adb_net_active_notification_title">ネットワーク経由のADBが有効です</string>
+  <string name="adb_both_active_notification_title">USBとネットワーク経由のADBが有効です</string>
+  <string name="adb_active_generic_notification_message">タップしてデバッグを無効にします。</string>
   <!-- Permissions -->
+  <string name="allow_button">許可</string>
+  <string name="deny_button">拒否</string>
   <!-- Tethered notification -->
+  <string name="tethered_notification_no_device_message">接続しているデバイスはありません</string>
+  <string name="tethered_notification_one_device_message"><xliff:g id="count">%1$s</xliff:g>台のデバイスが接続しています</string>
+  <string name="tethered_notification_multi_device_message"><xliff:g id="count">%1$s</xliff:g>台のデバイスが接続しています</string>
   <!-- Single hand mode -->
+  <string name="singlehandmode_click_hint_message">スクリーンの外側をタップしてミニスクリーン表示を終了する</string>
+  <string name="singlehandmode_slide_hint_message">ナビゲーションバーの上を横にスライドしてミニスクリーン表示を切り替える</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_modifyOverlays">テーマのオーバーレイを変更</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_modifyOverlays">OverlayManagerServiceを使用してテーマのオーバーレイを変更することをアプリに許可します</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- Pocket Lock -->
