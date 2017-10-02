@@ -112,9 +112,6 @@ public class SignalClusterView
     private boolean mBlockWifi;
     private boolean mBlockEthernet;
     private boolean mBlockVolte;
-    private static final String DISABLE_NO_SIM =
-            "system:" + Settings.System.DISABLE_NO_SIM;
-    private boolean mShowNoSims;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -162,15 +159,9 @@ public class SignalClusterView
             mBlockEthernet = blockEthernet;
             mBlockWifi = blockWifi;
             mBlockVolte = blockVolte;
-
             // Re-register to get new callbacks.
             mNC.removeSignalCallback(this);
             mNC.addSignalCallback(this);
-	    }
-            if (DISABLE_NO_SIM) {
-        	    mShowNoSims = 
-                        newValue != null && Integer.parseInt(newValue) != 0;
-                     apply();
         }
     }
 
@@ -240,9 +231,8 @@ public class SignalClusterView
         int endPadding = mMobileSignalGroup.getChildCount() > 0 ? mMobileSignalGroupEndPadding : 0;
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
 
-//        TunerService.get(mContext).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
-        TunerService.get(mContext).addTunable(this,
-                StatusBarIconController.ICON_BLACKLIST,DISABLE_NO_SIM);
+        TunerService.get(mContext).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
+
         apply();
         applyIconTint();
         mNC.addSignalCallback(this);
@@ -584,7 +574,7 @@ public class SignalClusterView
             mWifiSignalSpacer.setVisibility(View.GONE);
         }
 
-        mNoSimsCombo.setVisibility((mNoSimsVisible && !mShowNoSims) ? View.VISIBLE : View.GONE);
+        mNoSimsCombo.setVisibility(mNoSimsVisible ? View.VISIBLE : View.GONE);
     }
 
     /**

@@ -4254,13 +4254,6 @@ public final class Settings {
          * if :icon is not set, default application icon will be used
          * @hide
          */
-
-        /**
-         * Disable No sim icon if sim isnt available
-         * @hide
-         */
-        public static final String DISABLE_NO_SIM = "disable_no_sim";
-
         public static final String LOCKSCREEN_SHORTCUTS = "lockscreen_shortcuts";
 
         /**
