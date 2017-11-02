@@ -48,8 +48,7 @@
   <java-symbol type="bool" name="config_enableGestureService" />
 
   <!-- Hardware buttons backlight -->
-  <integer name="config_buttonBrightnessSettingDefault">255</integer>
-  <bool name="config_deviceHasVariableButtonBrightness">false</bool>
-
+  <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+  <java-symbol type="bool" name="config_deviceHasVariableButtonBrightness" />
 </resources>
 
