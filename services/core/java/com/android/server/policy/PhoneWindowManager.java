@@ -463,6 +463,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mHasFeatureWatch;
     private boolean mHasFeatureLeanback;
 
+    boolean mHapticOnAction;
+
     // Assigned on main thread, accessed on UI thread
     volatile VrManagerInternal mVrManagerInternal;
 
@@ -1084,6 +1086,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER), false, this,
+                    UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HAPTIC_ON_ACTION_KEY), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -2391,6 +2396,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         mNavBarOpacityMode = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_navBarOpacityMode);
+	mHapticOnAction = (Settings.System.getIntForUser(resolver,
+                    Settings.System.HAPTIC_ON_ACTION_KEY, 0, UserHandle.USER_CURRENT) == 1);
     }
 
     @Override
@@ -3654,11 +3661,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 if (mDoubleTapOnHomeBehavior != KEY_ACTION_NOTHING) {
                     mHandler.removeCallbacks(mHomeDoubleTapTimeoutRunnable); // just in case
                     mHomeDoubleTapPending = true;
+		if (mHapticOnAction) {        	    
+		    performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+		}
                     mHandler.postDelayed(mHomeDoubleTapTimeoutRunnable,
                             ViewConfiguration.getDoubleTapTimeout());
                     return -1;
                 }
-
+		if (mHapticOnAction) {        	    
+		    performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+		}
                 handleShortPressOnHome();
                 return -1;
             }
@@ -3746,6 +3758,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 mMenuPressed = false;
                 if (!canceled) {
+		if (mHapticOnAction) {        	    
+		    performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+		}
                     performKeyAction(mPressOnMenuBehavior, event);
                 }
             }
@@ -3790,6 +3805,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         cancelPreloadRecentApps();
                     }
                     if (!canceled) {
+		if (mHapticOnAction) {        	    
+		    performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+		}
                         performKeyAction(mPressOnAppSwitchBehavior, event);
                     }
                 }
@@ -6300,6 +6318,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         boolean useHapticFeedback = down
+		&& (!mHapticOnAction)
                 && (policyFlags & WindowManagerPolicy.FLAG_VIRTUAL) != 0
                 && event.getRepeatCount() == 0;
 
