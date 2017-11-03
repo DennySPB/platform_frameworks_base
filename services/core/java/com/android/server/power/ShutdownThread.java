@@ -354,34 +354,6 @@ public final class ShutdownThread extends Thread {
         pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
 
         pd.show();
-        return pd;
-    }
-
-    private static boolean showSysuiReboot() {
-        Log.d(TAG, "Attempting to use SysUI shutdown UI");
-        try {
-            StatusBarManagerInternal service = LocalServices.getService(
-                    StatusBarManagerInternal.class);
-            if (service.showShutdownUi(mReboot, mReason)) {
-                // Sysui will handle shutdown UI.
-                Log.d(TAG, "SysUI handling shutdown UI");
-                return true;
-            }
-        } catch (Exception e) {
-            // If anything went wrong, ignore it and use fallback ui
-        }
-        Log.d(TAG, "SysUI is unavailable");
-        return false;
-    }
-
-    private static void beginShutdownSequence(Context context) {
-        synchronized (sIsStartedGuard) {
-            if (sIsStarted) {
-                Log.d(TAG, "Shutdown sequence already running, returning.");
-                return;
-            }
-            sIsStarted = true;
-        }
 
         sInstance.mProgressDialog = pd;
         sInstance.mContext = context;
