@@ -235,6 +235,7 @@
   <string-array name="debug_hw_renderer_entries">
     <item msgid="2578620445459945681">"OpenGL (по умолчанию)"</item>
     <item msgid="2839130076198120436">"OpenGL (Skia)"</item>
+    <item>Vulkan (Skia)</item>
   </string-array>
   <string-array name="app_process_limit_entries">
     <item msgid="3401625457385943795">"Стандартное ограничение"</item>
