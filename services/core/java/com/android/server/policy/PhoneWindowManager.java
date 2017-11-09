@@ -359,6 +359,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int KEY_ACTION_SLEEP = 7;
     private static final int KEY_ACTION_LAST_APP = 8;
     private static final int KEY_ACTION_SPLIT_SCREEN = 9;
+    private static final int KEY_ACTION_GO_HOME = 15;
 
     // Masks for checking presence of hardware keys.
     // Must match values in core/res/res/values/config.xml
@@ -749,6 +750,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     volatile boolean mKeyguardOccluded;
     boolean mHomePressed;
     boolean mHomeConsumed;
+    boolean mMenuConsumed;
     boolean mHomeDoubleTapPending;
     boolean mMenuPressed;
     boolean mAppSwitchLongPressed;
@@ -1323,6 +1325,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // Cache handled state
         boolean handled = mBackKeyHandled;
 
+	if (mHapticOnAction) {        	    
+		    performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
+		}
         if (hasPanicPressOnBackBehavior()) {
             // Check for back key panic press
             ++mBackKeyPressCounter;
@@ -2016,6 +2021,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KEY_ACTION_SPLIT_SCREEN:
                 toggleSplitScreen();
                 break;
+            case KEY_ACTION_GO_HOME:
+		launchHomeFromHotKey();
+		break;
             default:
                 break;
          }
@@ -2380,7 +2388,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final ContentResolver resolver = mContext.getContentResolver();
 
         // Initialize all assignments to sane defaults.
-        mPressOnMenuBehavior = KEY_ACTION_MENU;
+        mPressOnMenuBehavior = KEY_ACTION_GO_HOME;
 
         mLongPressOnMenuBehavior = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_longPressOnMenuBehavior);
@@ -3713,7 +3721,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Log.i(TAG, "Ignoring HOME; event canceled.");
                     return -1;
                 }
-
+		mMenuConsumed = true;
                 // Delay handling home if a double-tap is possible.
                 if (mDoubleTapOnHomeBehavior != KEY_ACTION_NOTHING) {
                     mHandler.removeCallbacks(mHomeDoubleTapTimeoutRunnable); // just in case
@@ -3814,6 +3822,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     cancelPreloadRecentApps();
                 }
                 mMenuPressed = false;
+
+                if (mMenuConsumed) {
+                    mMenuConsumed = false;
+                    return -1;
+                }
+
                 if (!canceled) {
 		if (mHapticOnAction) {        	    
 		    performHapticFeedbackLw(null, HapticFeedbackConstants.VIRTUAL_KEY, false);
