@@ -3722,6 +3722,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // Clear flags
                     mAccessibilityTvKey2Pressed = down;
                 }
+		mMenuConsumed = true;
 
                 mHomePressed = false;
                 if (mHomeConsumed) {
@@ -3733,7 +3734,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Log.i(TAG, "Ignoring HOME; event canceled.");
                     return -1;
                 }
-		mMenuConsumed = true;
+
                 // Delay handling home if a double-tap is possible.
                 if (mDoubleTapOnHomeBehavior != KEY_ACTION_NOTHING) {
                     mHandler.removeCallbacks(mHomeDoubleTapTimeoutRunnable); // just in case
@@ -3790,6 +3791,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         cancelPreloadRecentApps();
                     }
                     mHomePressed = true;
+		    mMenuConsumed = true;
                     performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
                     performKeyAction(mLongPressOnHomeBehavior, event);
                     mHomeConsumed = true;
@@ -3811,6 +3813,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 if (repeatCount == 0) {
                     mMenuPressed = true;
+
+
                     if (mEnableShiftMenuBugReports && (metaState & chordBug) == chordBug) {
                         Intent intent = new Intent(Intent.ACTION_BUG_REPORT);
                         mContext.sendOrderedBroadcastAsUser(intent, UserHandle.CURRENT,
