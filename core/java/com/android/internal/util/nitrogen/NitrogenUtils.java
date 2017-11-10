@@ -46,10 +46,10 @@ import java.util.List;
  */
 public class NitrogenUtils {
 
-/*
+
     public static final String INTENT_SCREENSHOT = "action_take_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_take_region_screenshot";
-*/
+
     public static void switchScreenOff(Context ctx) {
         PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
         if (pm!= null) {
@@ -90,7 +90,7 @@ public class NitrogenUtils {
         }, 20);
     }
 
-/*
+
     public static void takeScreenshot(boolean full) {
         IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
         try {
@@ -100,7 +100,7 @@ public class NitrogenUtils {
         }
     }
 
-*/
+
     private static final class FireActions {
         private static IStatusBarService mStatusBarService = null;
         private static IStatusBarService getStatusBarService() {
